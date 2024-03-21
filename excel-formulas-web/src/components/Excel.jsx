@@ -1,120 +1,110 @@
 import React, { useState } from 'react';
-import '../styles/excel.css'; // Make sure to adjust the path as needed
+import '../styles/excel.css'; // Ensure the CSS file is correctly linked
 
-function Excel() {
-  const [students, setStudents] = useState([
-    { id: 1, name: '', hindi: 0, maths: 0, english: 0, science: 0, operation: 'add', result: '' }
-  ]);
+function Grid() {
+  // Create an initial grid with 10 rows and 10 columns filled with empty strings
+  const createInitialGrid = () => Array.from({ length: 10 }, () => Array(10).fill(''));
 
-  const addStudent = () => {
-    const newId = students.length + 1;
-    setStudents([...students, 
-      { id: newId, name: '', hindi: 0, maths: 0, english: 0, science: 0, operation: 'add', result: '' }]);
+  const [data, setData] = useState(createInitialGrid);
+  const [selectedCells, setSelectedCells] = useState(new Set());
+  const [result, setResult] = useState(''); // State to store the operation result
+
+  // Function to handle changes in cell inputs
+  const handleCellChange = (row, col, value) => {
+    const newData = [...data];
+    newData[row] = [...newData[row]];
+    newData[row][col] = value;
+    setData(newData);
   };
 
-  const handleStudentChange = (id, field, value) => {
-    const updatedStudents = students.map(student =>
-      student.id === id ? { ...student, [field]: field === 'name' ? value : Number(value) } : student
-    );
-    setStudents(updatedStudents);
+  // Function to toggle cell selection
+  const toggleCellSelection = (row, col) => {
+    const key = `${row}-${col}`;
+    setSelectedCells((prevSelectedCells) => {
+      const newSelectedCells = new Set(prevSelectedCells);
+      if (newSelectedCells.has(key)) {
+        newSelectedCells.delete(key);
+      } else {
+        newSelectedCells.add(key);
+      }
+      return newSelectedCells;
+    });
   };
 
-  const handleOperationChange = (id, operation) => {
-    const updatedStudents = students.map(student =>
-      student.id === id ? { ...student, operation } : student
-    );
-    setStudents(updatedStudents);
-  };
+  // Function to perform the selected operation on the values of selected cells
+  const performOperation = (operation) => {
+    const values = Array.from(selectedCells).map((key) => {
+      const [row, col] = key.split('-').map(Number);
+      return parseFloat(data[row][col]) || 0;
+    });
 
-  const calculateResult = (id) => {
-    const student = students.find(student => student.id === id);
-    const marks = [student.hindi, student.maths, student.english, student.science];
+    if (!values.length) return;
 
     let calcResult;
-    switch (student.operation) {
+    switch (operation) {
       case 'add':
-        calcResult = marks.reduce((acc, curr) => acc + curr, 0);
+        calcResult = values.reduce((acc, value) => acc + value, 0);
         break;
       case 'subtract':
-        calcResult = marks.reduce((acc, curr) => acc - curr);
+        calcResult = values.reduce((acc, value) => acc - value);
         break;
       case 'multiply':
-        calcResult = marks.reduce((acc, curr) => acc * curr, 1);
-        break;
-      case 'divide':
-        calcResult = marks.reduce((acc, curr, i) => i === 0 ? curr : acc / curr);
-        break;
-      case 'mean':
-        calcResult = marks.reduce((acc, curr) => acc + curr, 0) / marks.length;
-        break;
-      case 'mode':
-        // Implement mode calculation
-        calcResult = 'Mode not implemented';
+        calcResult = values.reduce((acc, value) => acc * value);
         break;
       default:
-        calcResult = 'Invalid operation';
+        console.log('Operation not supported');
+        return;
     }
 
-    const updatedStudents = students.map(student =>
-      student.id === id ? { ...student, result: calcResult.toString() } : student
-    );
-    setStudents(updatedStudents);
+    setResult(calcResult); // Update the result state
   };
 
-  const resetResults = (id) => {
-    const updatedStudents = students.map(student =>
-      student.id === id ? { ...student, result: '', hindi: 0, maths: 0, english: 0, science: 0 } : student
-    );
-    setStudents(updatedStudents);
+  // Function to reset all inputs and selections
+  const resetGrid = () => {
+    setData(createInitialGrid());
+    setSelectedCells(new Set());
+    setResult(''); // Reset the result as well
+  };
+
+  // Function to add a new row
+  const addRow = () => {
+    setData([...data, Array(10).fill('')]); // Add a new row with 10 empty strings
   };
 
   return (
-    <div className="excel-container">
-      <table className="excel-table">
-        <thead>
-          <tr>
-            <th><input></input></th>
-            <th><input></input></th>
-            <th><input></input></th>
-            <th><input></input></th>
-            <th><input></input></th>
-            <th><input></input></th>
-            <th><input></input></th>
-            <th><input></input></th>
-          </tr>
-        </thead>
+    <div><br/>
+      <div className="operations">
+        <button onClick={() => performOperation('add')}>Add</button>
+        <button onClick={() => performOperation('subtract')}>Subtract</button>
+        <button onClick={() => performOperation('multiply')}>Multiply</button>
+        <button onClick={resetGrid}>Reset</button>
+        <button onClick={addRow}>Add Row</button> {/* Button to add a new row */}
+      </div>
+      <table className="grid-table">
         <tbody>
-          {students.map((student) => (
-            <tr key={student.id}>
-              <td><input type="text" value={student.name} onChange={(e) => handleStudentChange(student.id, 'name', e.target.value)} /></td>
-              <td><input type="number" value={student.hindi} onChange={(e) => handleStudentChange(student.id, 'hindi', e.target.value)} /></td>
-              <td><input type="number" value={student.maths} onChange={(e) => handleStudentChange(student.id, 'maths', e.target.value)} /></td>
-              <td><input type="number" value={student.english} onChange={(e) => handleStudentChange(student.id, 'english', e.target.value)} /></td>
-              <td><input type="number" value={student.science} onChange={(e) => handleStudentChange(student.id, 'science', e.target.value)} /></td>
-              <td>
-                <select onChange={(e) => handleOperationChange(student.id, e.target.value)} value={student.operation}>
-                  <option value="add">Add</option> 
-                  <option value="subtract">Subtract</option>
-                  <option value="multiply">Multiply</option>
-                  <option value="divide">Divide</option>
-                  <option value="mean">Mean</option>
-                  <option value="mode">Mode</option>
-                </select>
-              </td>
-              <td>
-                <button onClick={() => calculateResult(student.id)} className="action-btn calculate">Calculate</button> <span></span>
-                <button onClick={() => resetResults(student.id)} className="action-btn reset">Reset</button>
-              </td>
-              <td>{student.result}</td>
-
+          {data.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, colIndex) => (
+                <td key={colIndex} 
+                    className={selectedCells.has(`${rowIndex}-${colIndex}`) ? 'selected' : ''} 
+                    onClick={() => toggleCellSelection(rowIndex, colIndex)}>
+                  <input
+                    type="text"
+                    value={cell}
+                    onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
+                  />
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
       </table>
-      <button onClick={addStudent} className="add-student-btn">Add Student</button>
+     
+    <div className='result' ><br/>
+    <b>  {result}</b> <br/>
+    </div>
     </div>
   );
 }
 
-export default Excel;
-
+export default Grid;

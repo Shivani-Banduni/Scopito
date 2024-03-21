@@ -1,0 +1,59 @@
+/* image.css */
+.app {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .image-container {
+    position: relative;
+    width: 190%; /* Adjust based on your image and layout */
+    margin: auto; /* Center the container */
+  }
+  
+  .image-container img {
+    width: 80%;
+    height: auto; /* Maintain aspect ratio */
+    display: block;
+  }
+  
+  .marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #fff; /* Optional: white border for visibility */
+    cursor: pointer;
+    transform: translate(-50%, -50%); /* Center the marker on coordinates */
+  }
+  
+
+
+
+
+
+
+
+  /* image.css */
+.image-container img {
+    width: 80%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .zoomed {
+    transform: scale(1.8); /* 180% zoom */
+  }
+  
+  .thumbnails {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .thumbnail {
+    width: 100px; /* Small size for thumbnails */
+    height: auto;
+    margin-right: 10px;
+  }
+  

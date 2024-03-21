@@ -1,16 +1,16 @@
-/* form.css */
+
 .issue-form {
     background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 20px;
-    width: 300px; /* Fixed width, adjust as needed */
-    box-sizing: border-box; /* Include padding in the element's total width and height */
-    position: fixed; /* Use fixed to keep the form in place when scrolling */
-    top: 50%; /* Center the form vertically */
-    right: 0; /* Align the form to the extreme right */
-    transform: translateY(-50%); /* Center the form vertically with respect to its height */
-    z-index: 100; /* Ensure it's above other content */
+    width: 300px; 
+    box-sizing: border-box; 
+    position: fixed; 
+    top: 50%; 
+    right: 0; 
+    transform: translateY(-50%); 
+    z-index: 100; 
   }
   
   .issue-form form {
@@ -31,11 +31,11 @@
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
-    margin-bottom: 10px; /* Space between form fields */
+    margin-bottom: 10px; 
   }
   
   .issue-form textarea {
-    resize: vertical; /* Allows vertical resizing, consider limiting the height */
+    resize: vertical; 
   }
   
   .issue-form button {

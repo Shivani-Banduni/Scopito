@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import '../styles/excel.css'; // Ensure the CSS file is correctly linked
+import '../styles/excel.css'; 
 
 function Grid() {
-  // Create an initial grid with 10 rows and 10 columns filled with empty strings
   const createInitialGrid = () => Array.from({ length: 10 }, () => Array(10).fill(''));
 
   const [data, setData] = useState(createInitialGrid);
   const [selectedCells, setSelectedCells] = useState(new Set());
   const [result, setResult] = useState(''); // State to store the operation result
 
-  // Function to handle changes in cell inputs
   const handleCellChange = (row, col, value) => {
     const newData = [...data];
     newData[row] = [...newData[row]];
@@ -17,7 +15,7 @@ function Grid() {
     setData(newData);
   };
 
-  // Function to toggle cell selection
+ 
   const toggleCellSelection = (row, col) => {
     const key = `${row}-${col}`;
     setSelectedCells((prevSelectedCells) => {
@@ -31,7 +29,6 @@ function Grid() {
     });
   };
 
-  // Function to perform the selected operation on the values of selected cells
   const performOperation = (operation) => {
     const values = Array.from(selectedCells).map((key) => {
       const [row, col] = key.split('-').map(Number);
@@ -56,19 +53,19 @@ function Grid() {
         return;
     }
 
-    setResult(calcResult); // Update the result state
+    setResult(calcResult); 
   };
 
-  // Function to reset all inputs and selections
+
   const resetGrid = () => {
     setData(createInitialGrid());
     setSelectedCells(new Set());
-    setResult(''); // Reset the result as well
+    setResult(''); 
   };
 
-  // Function to add a new row
+  
   const addRow = () => {
-    setData([...data, Array(10).fill('')]); // Add a new row with 10 empty strings
+    setData([...data, Array(10).fill('')]); 
   };
 
   return (

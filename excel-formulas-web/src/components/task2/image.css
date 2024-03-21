@@ -1,30 +1,34 @@
-/* image.css */
+
 .app {
     display: flex;
     justify-content: center;
     padding: 20px;
+    width: 100%;
+    margin-top: 2%;
+    max-width: max-content;
   }
   
   .image-container {
     position: relative;
-    width: 190%; /* Adjust based on your image and layout */
-    margin: auto; /* Center the container */
+
   }
   
   .image-container img {
-    width: 80%;
-    height: auto; /* Maintain aspect ratio */
+  
+    height: auto; 
     display: block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
   
   .marker {
     position: absolute;
+    color: white;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid #fff; /* Optional: white border for visibility */
+    border: 2px solid #fff; 
     cursor: pointer;
-    transform: translate(-50%, -50%); /* Center the marker on coordinates */
+    transform: translate(-50%, -50%); 
   }
   
 
@@ -34,26 +38,92 @@
 
 
 
-  /* image.css */
+
 .image-container img {
-    width: 80%;
+    width: 120%;
     height: auto;
+    margin: auto;
     transition: transform 0.3s ease;
   }
   
   .zoomed {
-    transform: scale(1.8); /* 180% zoom */
+    transform: scale(1.8); 
   }
   
-  .thumbnails {
+  .thumbnails{
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    /* justify-content: center; */
+    margin-top: 10px;
+    gap: 10px;
+    margin-left: 10%;
+ 
   }
   
   .thumbnail {
-    width: 100px; /* Small size for thumbnails */
+    width: 100px; 
     height: auto;
-    margin-right: 10px;
+  }
+  
+
+
+
+
+
+
+
+
+
+.table-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 90%; 
+    max-width: 800px; 
+    margin: auto;
+    margin-top: 10%;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border: 2px solid rgb(127, 125, 125); 
+  }
+  
+  th {
+    background-color: #f2f2f2; 
+    color: #333; 
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9; 
+  }
+  
+  tr:hover {
+    background-color: #ddd; 
+  }
+  
+  th, td {
+    text-align: center;
+  }
+  
+  
+
+  .report-section {
+    padding: 10px;
+  
+    border-radius: 5px;
+    margin-left: 100%;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+    background-color: #d48787;
+    /* border: 1px solid black; */
+    width: 40%;
+    color:  rgb(56, 53, 53);
+    background-color: rgb(187, 181, 181);
   }
   
